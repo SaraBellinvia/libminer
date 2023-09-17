@@ -13,5 +13,16 @@ test_that("lib_summary returns expected results", {
 })
 
 test_that("lib_summary fails appropriately", {
-  expect_error(lib_summary("foo"), "unused argument")
+  expect_error(lib_summary("foo"), "'sizes' must be TRUE or FALSE.")
+})
+
+test_that("sizes argument works", {
+  # create object
+  res <- lib_summary(sizes = TRUE)
+  # test whether res has 3 columns
+  expect_equal(ncol(res), 3)
+  # check whether column names are correct
+  expect_equal(names(res), c("Library", "n_packages", "lib_size"))
+  # check whether lib size is numerical
+  expect_type(res$lib_size, "double")
 })
